@@ -18,7 +18,7 @@ that allows attackers to gain arbitrary code execution via malicious strings in 
 
 CVE-2024-7448 is Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection').
 
-For example in windows OS the "&" operator acts as a command seperator, this intructs the OS to sequentially run two or more commands when seperated by the "&" operator.
+In windows OS the "&" operator acts as a command seperator, this intructs the OS to sequentially run two or more commands when seperated by the "&" operator.
 For example "dir & echo Done" lists files and then immediately prints "Done". This operator will be useful in the section below. 
 
 # Suspected Attack Flow
