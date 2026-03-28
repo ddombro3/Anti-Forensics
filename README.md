@@ -4,7 +4,7 @@ A 2-step anti forensics system.
 # Inspiration
 In current popular media a well known figure is Jeffery Epstein, after hearing about this situation and doing some research
 I came across a very interesting and concerning intrusion that took place on Sunday, February 12th, 2023 affecting the FBI.
-This compelled me to try and recreate a similar system for user privacy security and educational use. 
+This compelled me to research further into digital forensics and understand better how intrusions like these work. 
 
 Here is the official report outlining the attack with a timeline included and some other interesting information.
 Timeline begins on page 30.
