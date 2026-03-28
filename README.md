@@ -43,4 +43,5 @@ Therefore opening a reverse TCP shell, then the attackers deleted 500TB of data 
 
 # More Resources
 NATO Cooperative Cyber Defense Centre of Excellence - Digital Intelligence and Evidence Collection in Special Operations
+
 https://ccdcoe.org/uploads/2018/10/BDF_Battlefield_Digital_Forensics_final.pdf
