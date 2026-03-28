@@ -254,13 +254,52 @@ void print_telemetry(const SystemTelemetry& t) {
 
 
 
+
 int main() {
-    SystemTelemetry telemetry = collect_telemetry();
-    print_telemetry(telemetry);
+
+    char reply;
+
+
+    //First checking for any malware research tools
+    //TODO: SANDBOXIE, CWSANDBOX, VPC, COMODO, QIHOO, NULL_BRAND
+    bool is_cuckoo = VM::detect(VM::CUCKOO_PIPE);
+
+    //Determine next steps if cuckoo is watching
+    if (is_cuckoo) {
+        std::cout << "YES: Cuckoo Sandbox pipe detected (We are likely being analyzed). Tweak out asap." << std::endl;
+    } else {
+        std::cout << "NO: Cuckoo pipe not found." << std::endl;
+    }
+
+
+
+    bool is_vm = VM::detect();
+    if(is_vm){
+        std::cout << "Virtual Machine Detected\n" << std::endl;
+    } else {
+        std::cout << "Running on bare metal (Physical Machine)\n" << std::endl;
+    }
+    std::cout << "\n" << std::endl;
+
+
+
+
+        const std::string result = VM::brand();
+            if (result == "KVM") {
+        // do KVM specific stuff
+    } else if (result == "VirtualBox") {
+        // you get the idea
+    } else if (result == brands::VMWARE) {
+        // having manual string comparisons like the two
+        // previous ones can lead to typos which will 
+        // make the whole check completely redundant.
+        // So the lib provides hardcoded string variables 
+        // as aliases to avoid these kinds of situations. 
+        // They are located in the aforementioned brand table
+    }
 
         const std::uint8_t percent = VM::percentage();
-
-    if (percent == 100) {
+            if (percent == 100) {
         std::cout << "Definitely a VM!\n";
     } else if (percent == 0) {
         std::cout << "Definitely NOT a VM\n";
@@ -269,7 +308,22 @@ int main() {
     }
 
     // converted to int for console character encoding reasons
-    std::cout << "percentage: " << static_cast<int>(percent) << "%\n"; 
+    std::cout << "percentage: " << static_cast<int>(percent) << "%\n\n"; 
+
+
+
+    SystemTelemetry telemetry = collect_telemetry();
+    print_telemetry(telemetry); 
+    std::cout << "\n" << std::endl;
+
+    //2nd step
+    std::cout << "Activate Tung Tung Sahur? Y/N" << std::endl;
+    std::cin >> reply;
+    if(reply == 'y' || reply == 'Y'){
+        std::cout << "Tung Tung Sahur" << std::endl;
+    } else {
+        std::cout << "Ok" << std::endl;
+    }
 
     return 0;
 }
