@@ -6,6 +6,7 @@
 #include <filesystem>
 #include <iomanip>
 #include <sstream>
+#include "third_party/vmaware.hpp"
 
 #ifdef _WIN32
     #include <windows.h>
