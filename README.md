@@ -15,6 +15,7 @@ Based on the official report, I believe CVE-2024-7448 was utilized in this attac
 
 CVE-2024-7448 is a critical OS command injection vulnerability in Magnet Forensics AXIOM (prior to version 8.0.0.39753)
 that allows attackers to gain arbitrary code execution via malicious strings in Android device images.
+
 CVE-2024-7448 is Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection').
 
 For example in windows OS the "&" operator acts as a command seperator, this intructs the OS to sequentially run two or more commands when seperated by the "&" operator.
