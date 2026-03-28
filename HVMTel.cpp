@@ -12,7 +12,7 @@
     #include <windows.h>
     #include <intrin.h>
 #else
-    #include <cpuid.h>
+    //#include <cpuid.h>
     #include <unistd.h>
     #include <sys/sysinfo.h>
     #include <sys/utsname.h>
@@ -251,9 +251,25 @@ void print_telemetry(const SystemTelemetry& t) {
     std::cout << "Disk Available:    " << format_bytes(t.disk.available_bytes) << '\n';
 }
 
+
+
+
 int main() {
     SystemTelemetry telemetry = collect_telemetry();
     print_telemetry(telemetry);
+
+        const std::uint8_t percent = VM::percentage();
+
+    if (percent == 100) {
+        std::cout << "Definitely a VM!\n";
+    } else if (percent == 0) {
+        std::cout << "Definitely NOT a VM\n";
+    } else {
+        std::cout << "Unsure if it's a VM\n";
+    }
+
+    // converted to int for console character encoding reasons
+    std::cout << "percentage: " << static_cast<int>(percent) << "%\n"; 
 
     return 0;
 }
