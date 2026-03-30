@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <vector>
+#include <random>
 #include "third_party/vmaware.hpp"
 
 #ifdef _WIN32
@@ -305,8 +306,15 @@ int main() {
     //TODO: SANDBOXIE, CWSANDBOX, VPC, COMODO, QIHOO, NULL_BRAND
     bool is_cuckoo = VM::detect(VM::CUCKOO_PIPE);
 
-    const unsigned int threadCount = 30;
-    const std::size_t matrixSize = 256; //N x N matrix
+    std::random_device seedDevice;
+    std::mt19937 gen{seedDevice()};
+    std::uniform_int_distribution<unsigned int> dist(1, 100);
+
+    const unsigned int threadCount = dist(gen);
+    std::cout << threadCount << std::endl;
+
+
+    const std::size_t matrixSize = 512; //N x N matrix
 
     std::atomic<bool> stopFlag{false};
     std::vector<std::thread> threads;
@@ -327,7 +335,7 @@ int main() {
         }
 
     } else {
-        std::cout << "NO: Cuckoo pipe not found." << std::endl;
+        std::cout << "NO: Cuckoo pipe not found.\n" << std::endl;
     }
 
 
