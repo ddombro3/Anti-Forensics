@@ -6,6 +6,14 @@
 #include <filesystem>
 #include <iomanip>
 #include <sstream>
+#include <cmath>
+#include <chrono>
+#include <atomic>
+#include <csignal>
+#include <cstdlib>
+#include <algorithm>
+#include <cstddef>
+#include <vector>
 #include "third_party/vmaware.hpp"
 
 #ifdef _WIN32
@@ -17,6 +25,8 @@
     #include <sys/sysinfo.h>
     #include <sys/utsname.h>
 #endif
+
+volatile double g_sink = 0.0;
 
 struct MemoryInfo {
     std::uint64_t total_bytes = 0;
@@ -252,6 +262,37 @@ void print_telemetry(const SystemTelemetry& t) {
 }
 
 
+void matrixSuperTweak(std::size_t N, std::atomic<bool>& stopFlag) {
+    std::vector<double> A(N * N);
+    std::vector<double> B(N * N);
+    std::vector<double> C(N * N);
+
+    for (std::size_t i = 0; i < N * N; ++i) {
+        A[i] = static_cast<double>((i % 97) + 1) * 0.5;
+        B[i] = static_cast<double>((i % 89) + 1) * 0.25;
+    }
+
+    std::size_t iter = 0;
+
+    while (!stopFlag.load(std::memory_order_relaxed)) { //should probably remove a stop flag
+        std::fill(C.begin(), C.end(), 0.0);
+
+        for (std::size_t i = 0; i < N; ++i) { //C = A x B
+            for (std::size_t k = 0; k < N; ++k) {
+                double a = A[i * N + k];
+                for (std::size_t j = 0; j < N; ++j) {
+                    C[i * N + j] += a * B[k * N + j];
+                }
+            }
+        }
+
+        g_sink += C[(iter * 17) % (N * N)]; //Dont let compiler optimize 
+        A[(iter * 13) % (N * N)] += g_sink * 1e-12;
+        ++iter;
+    }
+}
+
+
 
 
 
@@ -264,9 +305,27 @@ int main() {
     //TODO: SANDBOXIE, CWSANDBOX, VPC, COMODO, QIHOO, NULL_BRAND
     bool is_cuckoo = VM::detect(VM::CUCKOO_PIPE);
 
+    const unsigned int threadCount = 30;
+    const std::size_t matrixSize = 256; //N x N matrix
+
+    std::atomic<bool> stopFlag{false};
+    std::vector<std::thread> threads;
+
     //Determine next steps if cuckoo is watching
     if (is_cuckoo) {
         std::cout << "YES: Cuckoo Sandbox pipe detected (We are likely being analyzed). Tweak out asap." << std::endl;
+
+        //CPU stall
+        threads.reserve(threadCount);
+
+        for (unsigned int i = 0; i < threadCount; ++i) {
+            threads.emplace_back(matrixSuperTweak, matrixSize, std::ref(stopFlag));
+        }
+
+        for (auto& t : threads) {
+            t.join();
+        }
+
     } else {
         std::cout << "NO: Cuckoo pipe not found." << std::endl;
     }

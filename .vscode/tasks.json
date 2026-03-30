@@ -12,6 +12,7 @@
                 "-Wextra",
                 "-pedantic",
                 "-msse4.2",
+                "-pthread",
                 "${file}",
                 "-Ithird_party",
                 "-o",
